@@ -78,7 +78,7 @@ public interface IProductRepository
 /// <summary>
 /// Repository class for managing product documents in Elasticsearch.
 /// </summary>
-public class ProductRepository : IProductRepository
+public class ProductRepository : IProductRepository//or wha ever you called that
 {
     private readonly IElasticContext _context;
 
@@ -90,13 +90,13 @@ public class ProductRepository : IProductRepository
     [IndexName("products")]
     public virtual async Task<IEnumerable<Product>> SearchByCategoryAsync(string category)
     {
-        var res =  await _context.SearchAsync<Product>("products", q => q.Term(t => t.Field(f => f.Category).Value(category)));
+        var res =  await _context.SearchAsync<Product>(null, q => q.Term(t => t.Field(f => f.Category).Value(category)));
         return res;
     }
 
     public virtual async Task<IEnumerable<Product>> SearchByPriceRangeAsync(double minPrice, double maxPrice)
     {
-        return await _context.SearchAsync<Product>("products", q => q.Range(r => r.Field(f => f.Price).GreaterThanOrEquals(minPrice).LessThanOrEquals(maxPrice)));
+        return await _context.SearchAsync<Product>(null, q => q.Range(r => r.Field(f => f.Price).GreaterThanOrEquals(minPrice).LessThanOrEquals(maxPrice)));
     }
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -13,8 +13,7 @@ namespace ElasticSearchSharp.Services.DependencyInjection
     {
         public static IServiceCollection AddElasticFramework(this IServiceCollection services, ElasticConfig config)
         {
-
-            services.AddScoped<IElasticContext, ElasticContext>();
+            services.AddSingleton(config);
             return services;
         }
     }

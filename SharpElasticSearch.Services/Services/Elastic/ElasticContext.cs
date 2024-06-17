@@ -41,20 +41,20 @@ public abstract class ElasticContext : IElasticContext
 
     public virtual async Task<ElasticResponse> CreateIndexAsync(string indexName)
     {
-        var response = await Client.Indices.CreateAsync(indexName);
+        var response = await Client.Indices.CreateAsync(indexName.ToLower());
         return response.IsValid ? ElasticResponse.Ok() : ElasticResponse.Fail(response.ServerError.ToString());
     }
 
     public virtual async Task<ElasticResponse> DeleteIndexAsync(string indexName)
     {
-        var response = await Client.Indices.DeleteAsync(indexName);
+        var response = await Client.Indices.DeleteAsync(indexName.ToLower());
         return response.IsValid ? ElasticResponse.Ok() : ElasticResponse.Fail(response.ServerError.ToString());
     }
 
     public virtual async Task<ElasticResponse> IndexDocumentAsync<T>(string indexName, T document) where T : class
     {
         var method = MethodBase.GetCurrentMethod();
-        var resolvedIndexName = GetIndexName(method, indexName);
+        var resolvedIndexName = GetIndexName(method, indexName.ToLower());
 
         var response = await Client.IndexAsync(document, idx => idx.Index(resolvedIndexName));
         return response.IsValid ? ElasticResponse.Ok() : ElasticResponse.Fail(response.ServerError.ToString());
