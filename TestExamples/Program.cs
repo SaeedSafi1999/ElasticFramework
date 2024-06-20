@@ -90,7 +90,7 @@ public class ProductRepository : IProductRepository//or wha ever you called that
     [IndexName("products")]
     public virtual async Task<IEnumerable<Product>> SearchByCategoryAsync(string category)
     {
-        var res =  await _context.SearchAsync<Product>(null, q => q.Term(t => t.Field(f => f.Category).Value(category)));
+        var res =  await _context.SearchAsync<Product>(null,);
         return res;
     }
 
@@ -124,7 +124,7 @@ class Program
             new Product { Id = Guid.NewGuid().ToString(), Name = "Product 6", Price = 20.1, Category = "Category B" },
             new Product { Id = Guid.NewGuid().ToString(), Name = "Product 7", Price = 15.0, Category = "Category A" }
         };
-
+        
         var context = host.Services.GetRequiredService<IElasticContext>();
 
         // Create the index and index sample products

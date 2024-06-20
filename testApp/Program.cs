@@ -1,5 +1,8 @@
+using Elastic.Clients.Elasticsearch;
 using ElasticSearchSharp.Services.DependencyInjection;
 using ElasticSearchSharp.Services.Services.Elastic;
+using System;
+using System.Reflection;
 using testApp.Dependency;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,16 +13,24 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//set elastic
-builder.Services.AddElasticFramework(new SharedDomain.Configuration.ElasticConfig
-{
-    Password = "S@eedS@fi1234",
-    Port = 9200,
-    Url = "http://localhost",
-    Username = "elastic"
-});
-builder.Services.AddScoped<IElasticContext, ProductContext>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
+//set elastic
+builder.Services.AddScoped<IElasticContext, ProductContext>();
+
+
+//add Assemblies tha inheritance from IElasticContext
+List<Assembly> assemblies = new();
+assemblies.Add(Assembly.GetEntryAssembly());//add more if you need
+//add ElasticFramework
+builder.Services.AddElasticFramework(op =>
+{
+    op.Password = "S@eedS@fi1234";
+    op.Port = 9200;
+    op.Url = "http://localhost";
+    op.Username = "elastic";
+    op.assemblies = assemblies.ToArray();
+});
 
 var app = builder.Build();
 

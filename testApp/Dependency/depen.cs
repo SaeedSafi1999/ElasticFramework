@@ -1,6 +1,8 @@
-﻿using ElasticSearchSharp.Services.Services.Elastic;
+﻿using Elastic.Clients.Elasticsearch.QueryDsl;
+using ElasticSearchSharp.Services.Services.Elastic;
 using SharedDomain.Attributes;
 using SharedDomain.Configuration;
+using SharedDomain.DTOs;
 
 namespace testApp.Dependency
 {
@@ -39,11 +41,12 @@ namespace testApp.Dependency
     /// <summary>
     /// Context class for interacting with Elasticsearch for product-related operations.
     /// </summary>
-    //public class ProductContext : ElasticContext
-    //{
-    //    public ProductContext(ElasticConfig config) : base(config){ }
-    //}
+    public class ProductContext : ElasticContext
+    {
+        public ProductContext(ElasticConfig config) : base(config) { }
+    }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 
 
@@ -60,6 +63,8 @@ namespace testApp.Dependency
         /// <returns>A collection of products.</returns>
         Task<IEnumerable<Product>> SearchByCategoryAsync(string category);
 
+
+        Task<ElasticResponse> Insert(Product product);
         /// <summary>
         /// Searches for products by price range asynchronously.
         /// </summary>
@@ -72,7 +77,7 @@ namespace testApp.Dependency
 
 
 
-    // implement of EntityRepository/////////////////////////////////////////////////////////////////////////////////////
+    // implement of EntityRepository//////////////////////////////////////////////////////////////////////
     /// <summary>
     /// Repository class for managing product documents in Elasticsearch.
     /// </summary>
@@ -80,26 +85,40 @@ namespace testApp.Dependency
     {
         private readonly IElasticContext _context;
 
+
         public ProductRepository(IElasticContext context)
         {
             _context = context;
         }
 
+
+        [IndexName("products")]
         public async Task CreateIndexAsync(string indexName)
         {
             await _context.CreateIndexAsync(indexName);
         }
 
         [IndexName("products")]
-        public virtual async Task<IEnumerable<Product>> SearchByCategoryAsync(string category)
+        public async Task<ElasticResponse> Insert(Product product)
         {
-            var res = await _context.SearchAsync<Product>(null, q => q.Term(t => t.Field(f => f.Category).Value(category)));
-            return res;
+            return await _context.IndexDocumentAsync("products", product);
         }
 
+        [IndexName("products")]
+        public virtual async Task<IEnumerable<Product>> SearchByCategoryAsync(string category)
+        {
+            var query = new QueryDescriptor<Product>()
+            .Match(m => m.Field(f => f.Category).Query(category));
+
+            var results = await _context.SearchAsync<Product>(null, query);
+
+            return results;
+        }
+
+        [IndexName("products")]
         public virtual async Task<IEnumerable<Product>> SearchByPriceRangeAsync(double minPrice, double maxPrice)
         {
-            return await _context.SearchAsync<Product>(null, q => q.Range(r => r.Field(f => f.Price).GreaterThanOrEquals(minPrice).LessThanOrEquals(maxPrice)));
+            return await _context.SearchAsync<Product>(null, new QueryDescriptor<Product>().Range(r => r.NumberRange(z => z.Field(f => f.Price).Gte(minPrice).Field(z => z.Price).Lte(maxPrice))));
         }
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////

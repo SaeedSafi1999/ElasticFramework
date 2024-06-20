@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SharpElasticSearch.Services\ElasticSearchSharp.Services.csproj" />
+    <ProjectReference Include="..\SharpElasticSearch.Services\ElasticFramework.Services.csproj" />
   </ItemGroup>
 
 </Project>

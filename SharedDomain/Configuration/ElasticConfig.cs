@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -30,6 +31,16 @@ namespace SharedDomain.Configuration
         /// Gets or sets the password for authentication.
         /// </summary>
         public string? Password { get; set; }
+
+        /// <summary>
+        /// APIKEY for connecting to cloud
+        /// </summary>
+        public string ApiKey { get; set; }
+
+        /// <summary>
+        /// name of assemblies that inheritance from IElasticContext
+        /// </summary>
+        public IEnumerable<Assembly> assemblies { get; set; }
     }
 
 }
