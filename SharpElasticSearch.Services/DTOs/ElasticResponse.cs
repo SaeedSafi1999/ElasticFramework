@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SharedDomain.DTOs
+﻿namespace ElasticFramework.DTOs
 {
     /// <summary>
     /// response with data
@@ -43,7 +37,7 @@ namespace SharedDomain.DTOs
             => new ElasticResponse<T>
             {
                 IsSucces = false,
-                Message = $"Operation failed ERROR:{ex .Message}",
+                Message = $"Operation failed ERROR:{ex.Message}",
                 Exception = ex
             };
 

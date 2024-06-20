@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<Version>1.0.1</Version>
+		<PackageId>SaeedSafi.ElasticFramework</PackageId>
+		<Authors>Saeed Saafi</Authors>
+		<Product>ElasticFramework</Product>
+		<Description>This is a package for using Elasticsearch easily in your .NET project. I used the Repository design pattern in this package. If you work with Entity Framework, you can use this as well.</Description>
+		<Title>ElasticFramework</Title>
+		<PackageIcon>elasticframework.png</PackageIcon>
+		<RepositoryUrl>https://github.com/SaeedSafi1999/ElasticFramework</RepositoryUrl>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<PackageReadmeFile>readme.md</PackageReadmeFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Include="..\readme.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	  <None Include="C:\Users\DIAKO\Desktop\elasticframework.png">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	</ItemGroup>
+
+
+	<ItemGroup>
+		<PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.14.2" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
+		<PackageReference Include="Scrutor" Version="4.2.2" />
+	</ItemGroup>
+
+</Project>

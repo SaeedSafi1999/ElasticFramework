@@ -1,17 +1,8 @@
-﻿using ElasticSearchSharp.Services.Services.Elastic;
-using Microsoft.Extensions.DependencyInjection;
-using SharedDomain.Configuration;
-using System.Reflection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Nest;
-using System.Security.Principal;
-using Scrutor;
+﻿using Microsoft.Extensions.DependencyInjection;
+using ElasticFramework.Services.Elastic;
+using ElasticFramework.Configuration;
 
-namespace ElasticSearchSharp.Services.DependencyInjection
+namespace ElasticFramework.DependencyInjection
 {
     public static class DependencyExtension
     {
@@ -35,7 +26,7 @@ namespace ElasticSearchSharp.Services.DependencyInjection
                  .AddClasses(c => c.AssignableTo(typeof(IElasticContext)))
                  .AsImplementedInterfaces()
                  .WithScopedLifetime());
-            services.AddSingleton(sp =>{return elasticConfig;});
+            services.AddSingleton(sp => { return elasticConfig; });
             return services;
         }
 

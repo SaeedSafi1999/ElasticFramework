@@ -1,10 +1,10 @@
-﻿using SharedDomain.DTOs;
-using Elastic.Clients.Elasticsearch.QueryDsl;
+﻿using Elastic.Clients.Elasticsearch.QueryDsl;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Elastic.Clients.Elasticsearch;
+using ElasticFramework.DTOs;
 
-namespace ElasticSearchSharp.Services.Services.Elastic
+namespace ElasticFramework.Services.Elastic
 {
     /// <summary>
     /// Interface for the Elasticsearch context.

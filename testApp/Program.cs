@@ -1,6 +1,6 @@
 using Elastic.Clients.Elasticsearch;
-using ElasticSearchSharp.Services.DependencyInjection;
-using ElasticSearchSharp.Services.Services.Elastic;
+using ElasticFramework.DependencyInjection;
+using ElasticFramework.Services.Elastic;
 using System;
 using System.Reflection;
 using testApp.Dependency;

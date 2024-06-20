@@ -1,8 +1,7 @@
-﻿using ElasticSearchSharp.Services.Services.Elastic;
+﻿using ElasticFramework.Services.Elastic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SharedDomain.DTOs;
 using System.ComponentModel.DataAnnotations;
 using testApp.Dependency;
 

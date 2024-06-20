@@ -1,8 +1,8 @@
 ﻿using Elastic.Clients.Elasticsearch.QueryDsl;
-using ElasticSearchSharp.Services.Services.Elastic;
-using SharedDomain.Attributes;
-using SharedDomain.Configuration;
-using SharedDomain.DTOs;
+using ElasticFramework.Attributes;
+using ElasticFramework.Configuration;
+using ElasticFramework.DTOs;
+using ElasticFramework.Services.Elastic;
 
 namespace testApp.Dependency
 {

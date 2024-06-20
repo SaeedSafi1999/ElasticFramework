@@ -1,18 +1,13 @@
-﻿using SharedDomain.DTOs;
-using SharedDomain.Attributes;
-using SharedDomain.Configuration;
-using System.Reflection;
-using Elasticsearch.Net;
+﻿using System.Reflection;
 using Elastic.Clients.Elasticsearch;
 using Elastic.Clients.Elasticsearch.QueryDsl;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System;
 using Elastic.Transport;
 using Elastic.Clients.Elasticsearch.Core.Bulk;
-using Elastic.Transport.Products.Elasticsearch;
+using ElasticFramework.DTOs;
+using ElasticFramework.Attributes;
+using ElasticFramework.Configuration;
 
-namespace ElasticSearchSharp.Services.Services.Elastic
+namespace ElasticFramework.Services.Elastic
 {
     /// <summary>
     /// Abstract class for the Elasticsearch context.
@@ -91,16 +86,16 @@ namespace ElasticSearchSharp.Services.Services.Elastic
             return response.IsValidResponse ? ElasticResponse.Ok() : ElasticResponse.Fail(response.ElasticsearchServerError.Error.Reason);
         }
 
-        public virtual async Task<ElasticResponse> UpdateDocumentAsync<TDocument,TPartialDocument>(string indexName,UpdateRequest<TDocument,TPartialDocument> request) where TDocument : class where TPartialDocument:class
+        public virtual async Task<ElasticResponse> UpdateDocumentAsync<TDocument, TPartialDocument>(string indexName, UpdateRequest<TDocument, TPartialDocument> request) where TDocument : class where TPartialDocument : class
         {
             var method = MethodBase.GetCurrentMethod();
             var resolvedIndexName = GetIndexName(method, indexName);
 
-            var response = await Client.UpdateAsync<TDocument, TPartialDocument>(request);
+            var response = await Client.UpdateAsync(request);
             return response.IsValidResponse ? ElasticResponse.Ok() : ElasticResponse.Fail(response.ElasticsearchServerError.Error.Reason);
         }
 
-        public virtual async Task<ElasticResponse> IndexRangeDocumentAsync<TDocument>(string indexName,IEnumerable<TDocument> documents) where TDocument : class
+        public virtual async Task<ElasticResponse> IndexRangeDocumentAsync<TDocument>(string indexName, IEnumerable<TDocument> documents) where TDocument : class
         {
             var method = MethodBase.GetCurrentMethod();
             var resolvedIndexName = GetIndexName(method, indexName);
