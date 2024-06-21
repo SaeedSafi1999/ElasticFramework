@@ -3,7 +3,7 @@ if you used  Repository design pattern in your projects you can easily use this 
 
    download it from nuget
 
-    Install-Package ElasticFramework
+    Install-Package SaeedSafi.ElasticFramework
     
  set this code to your program.cs
 
@@ -13,10 +13,13 @@ if you used  Repository design pattern in your projects you can easily use this 
 	//add ElasticFramework
 	builder.Services.AddElasticFramework(op =>
 	{
+    //add if you ran elastic local
     op.Password = "your-password";//string
-    op.Port = your-port;//int
-    op.Url = "http://localhost";
     op.Username = "your-username";
+    op.Url = "http://localhost";
+    op.Port = your-port;//int
+    //if you use elastic cloud
+    op.ApiKey = "Your-ApiKey";
     op.assemblies = assemblies.ToArray();
 	});
 
